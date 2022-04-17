@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/output.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.3/gsap.min.js"></script>
+    <style>
+        .steps-num.active{
+            background-color: rgb(146, 64, 14) !important;
+            color: white;
+            font-weight: bold;
+        }
+        .steps-num.active::after{
+            background-color: rgb(146, 64, 14) !important;
+        }
+    </style>
+</head>
+<body class="bg-zinc-100 lg:p-0 p-4">
+    <div class="mx-auto max-w-[600px] mt-10">
+        <div class="steps flex justify-between items-center mb-10 text-amber-900">
+            <div class="text-center grow relative">
+                <div class="transition-all steps-num step1 bg-orange-300 inline-block px-3 py-1 rounded-full mb-1 active">1</div>
+                <div class="uppercase text-[.6rem] whitespace-nowrap">Account Setup</div>
+            </div>
+            <!-- <div class="h-[2px] w-[120%] bg-orange-300 mt-[-0.9rem]"></div> -->
+            <div class="text-center grow relative">
+                <div class="transition-all steps-num step2 bg-orange-300 inline-block px-3 py-1 rounded-full mb-1 after:h-[2px] after:bg-orange-300 after:w-full after:-left-1/2 after:mt-3 after:-z-10 after:absolute">2</div>
+                <div class="uppercase text-[.6rem] whitespace-nowrap">Personal Details</div>
+            </div>
+            <!-- <div class="h-[2px] w-[120%] bg-orange-300 mt-[-0.9rem]"></div> -->
+            <div class="text-center grow relative">
+                <div class="transition-all steps-num step3 bg-orange-300 inline-block px-3 py-1 rounded-full mb-1 after:h-[2px] after:bg-orange-300 after:w-full after:-left-1/2 after:mt-3 after:-z-10 after:absolute">3</div>
+                <div class="uppercase text-[.6rem] whitespace-nowrap">Social Profiles</div>
+            </div>
+        </div>
+        
+        <form class="w-full relative">
+            <div id="step1" class="absolute w-full flex flex-col shadow-xl border rounded-sm p-5 bg-white">
+                <div class="uppercase text-center font-bold mb-8 text-lg text-amber-900">1. Create your account</div>
+                <div class="flex flex-col space-y-4 mb-8">
+                    <input type="email" placeholder="Email" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="password" placeholder="Password" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="password" placeholder="Confirm Password" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                </div>
+                <div class="mx-auto">
+                    <button id="btnNext1" class="transition-all bg-amber-800 text-white px-6 py-2 hover:bg-orange-300 hover:text-amber-900 focus:scale-90">Next</button>
+                </div>
+            </div>
+            <div id="step2" class="absolute w-full flex flex-col shadow-xl border rounded-sm p-5 bg-white">
+                <div class="uppercase text-center font-bold mb-8 text-lg text-amber-900">2. Personal Details</div>
+                <div class="flex flex-col space-y-4 mb-8">
+                    <input type="text" placeholder="First Name" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="text" placeholder="Last Name" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="text" placeholder="Phone Number" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <textarea type="text" placeholder="Address" class="transition-all border py-5 px-4 focus:outline-amber-800"></textarea>
+                </div>
+                <div class="mx-auto space-x-2">
+                    <button id="btnPrev2" class="transition-all bg-amber-800 text-white px-6 py-2 hover:bg-orange-300 hover:text-amber-900">Back</button>
+                    <button id="btnNext2" class="transition-all bg-amber-800 text-white px-6 py-2 hover:bg-orange-300 hover:text-amber-900">Next</button>
+                </div>
+            </div>
+            <div id="step3" class="absolute w-full flex flex-col shadow-xl border rounded-sm p-5 bg-white">
+                <div class="uppercase text-center font-bold mb-8 text-lg text-amber-900">3. Social Profiles</div>
+                <div class="flex flex-col space-y-4 mb-8">
+                    <input type="text" placeholder="Facebook" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="text" placeholder="Twitter" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="text" placeholder="Instagram" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                    <input type="text" placeholder="LinkedIn" class="transition-all border py-5 px-4 focus:outline-amber-800">
+                </div>
+                <div class="mx-auto">
+                    <button id="btnPrev3" class="transition-all bg-amber-800 text-white px-6 py-2 hover:bg-orange-300 hover:text-amber-900 focus:scale-90">Back</button>
+                    <button id="btnNext3" class="transition-all bg-amber-800 text-white px-6 py-2 hover:bg-orange-300 hover:text-amber-900">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        gsap.set(["#step2", "#step3"], {autoAlpha: 0})
+ 
+        let btnNext1 = document.getElementById("btnNext1");
+        let btnPrev2 = document.getElementById("btnPrev2");
+        let btnNext2 = document.getElementById("btnNext2");
+        let btnNext3 = document.getElementById("btnNext3");
+        let step1 = document.querySelector(".step1");
+        let step2 = document.querySelector(".step2");
+        let step3 = document.querySelector(".step3");
+
+        var tlStep1 = gsap.timeline({paused: true});
+        var tlStep2 = gsap.timeline({paused: true});
+        var tlStep3 = gsap.timeline({paused: true});
+        
+        tlStep1.to("#step1", {scale:1.1, ease:"back.inOut(1.7)", duration: 0.3});
+        tlStep1.to("#step1", {duration: 0.5, scale:0.7, autoAlpha: 0})
+        tlStep1.fromTo("#step2", {left: 100}, {left: 0, duration: 0.3, autoAlpha: 1, y: 0, delay: -0.3})
+        
+        tlStep2.to("#step2", {scale:1.1, ease:"back.inOut(1.7)", duration: 0.3});
+        tlStep2.to("#step2", {duration: 0.5, scale:0.7, autoAlpha: 0})
+        tlStep2.fromTo("#step3", {left: 100}, {left: 0, duration: 0.3, autoAlpha: 1, y: 0, delay: -0.3})
+        
+        gsap.set(["#step2", "#step3"], {autoAlpha: 0})
+        
+        btnNext1.addEventListener('click', function (e) {  
+            e.preventDefault()
+            tlStep1.play()
+            step2.classList.add("active");
+        })
+        
+        btnPrev2.addEventListener('click', function (e) {  
+            e.preventDefault()
+            tlStep1.reverse()
+            step2.classList.remove("active");
+        })
+        
+        btnNext2.addEventListener('click', function (e) {  
+            e.preventDefault()
+            tlStep2.play()
+            step3.classList.add("active");
+        })
+        
+        btnPrev3.addEventListener('click', function (e) {  
+            e.preventDefault()
+            tlStep2.reverse()
+            step3.classList.remove("active");
+        })
+        
+        btnNext3.addEventListener('click', function (e) {  
+            e.preventDefault()
+        })
+    </script>
+</body>
+</html>
